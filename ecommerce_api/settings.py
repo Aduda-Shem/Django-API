@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.openid_connect',
+    
+    'crispy_forms',
 
-    # 'debug_toolbar',
     'drf_yasg',
     'rest_framework',
     'rest_framework_swagger',
@@ -63,16 +64,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 
-    # allauth account midleware
     "allauth.account.middleware.AccountMiddleware",
-]
+
+    ]
 
 ROOT_URLCONF = 'ecommerce_api.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,10 +89,7 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
@@ -146,36 +144,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SOCIALACCOUNT_PROVIDERS = {
     "openid_connect": {
         "APPS": [
-            # {
-            #     "provider_id": "google",
-            #     "name": "Google",
-            #     "client_id": env("GOOGLE_CLIENT_ID"),
-            #     "secret": env("GOOGLE_CLIENT_SECRET"),
-            #     "settings": {
-            #         "server_url": "https://accounts.google.com",
-            #         "token_auth_method": "client_secret_basic",
-            #     },
-            # },
-            # {
-            #     "provider_id": "twitter",
-            #     "name": "Twitter",
-            #     "client_id": env("TWITTER_CLIENT_ID"),
-            #     "secret": env("TWITTER_CLIENT_SECRET"),
-            #     "settings": {
-            #         "server_url": "https://api.twitter.com",
-            #         "token_auth_method": "client_secret_basic",
-            #     },
-            # },
             {
-                "provider_id": "github",
-                "name": "GitHub",
-                "client_id": env("GITHUB_CLIENT_ID"),
-                "secret": env("GITHUB_CLIENT_SECRET"),
+                "provider_id": "google",
+                "name": "Google",
+                "client_id": env("GOOGLE_CLIENT_ID"),
+                "secret": env("GOOGLE_CLIENT_SECRET"),
                 "settings": {
-                    "server_url": "https://github.com",
+                    "server_url": "https://accounts.google.com",
                     "token_auth_method": "client_secret_basic",
                 },
             },
+
+            # {
+            #     "provider_id": "github",
+            #     "name": "GitHub",
+            #     "client_id": env("GITHUB_CLIENT_ID"),
+            #     "secret": env("GITHUB_CLIENT_SECRET"),
+            #     "settings": {
+            #         "server_url": "https://github.com",
+            #         "token_auth_method": "client_secret_basic",
+            #     },
+            # },
         ]
     }
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
