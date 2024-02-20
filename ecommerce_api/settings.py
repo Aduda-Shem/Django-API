@@ -19,12 +19,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 SECRET_KEY = env("SECRET_KEY")
 
-# DEBUG = env("DEBUG")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -37,15 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'oauth2_provider',
 
-    # auth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.openid_connect',
-    
     'crispy_forms',
-
     'drf_yasg',
     'rest_framework',
     'rest_framework_swagger',
@@ -63,12 +53,23 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+]
 
-    "allauth.account.middleware.AccountMiddleware",
+CORS_ORIGIN_ALLOW_ALL = True
 
-    ]
+AUTH_USER_MODEL = 'ecommerce.User'
 
 ROOT_URLCONF = 'ecommerce_api.urls'
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
 TEMPLATES = [
     {
@@ -81,8 +82,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                'django.template.context_processors.request',
             ],
         },
     },
@@ -94,10 +93,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'ecommerce_api.wsgi.application'
@@ -141,39 +138,25 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SITE_ID=1
-
-
-SOCIALACCOUNT_PROVIDERS = {
-    "openid_connect": {
-        "APPS": [
-            {
-                "provider_id": "google",
-                "name": "Google",
-                "client_id": env("GOOGLE_CLIENT_ID"),
-                "secret": env("GOOGLE_CLIENT_SECRET"),
-                "settings": {
-                    "server_url": "https://accounts.google.com",
-                    "token_auth_method": "client_secret_basic",
-                },
-            },
-
-            # {
-            #     "provider_id": "github",
-            #     "name": "GitHub",
-            #     "client_id": env("GITHUB_CLIENT_ID"),
-            #     "secret": env("GITHUB_CLIENT_SECRET"),
-            #     "settings": {
-            #         "server_url": "https://github.com",
-            #         "token_auth_method": "client_secret_basic",
-            #     },
-            # },
-        ]
-    }
-}
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     "oauth2_provider": {
+#         "APPS": [
+#             {
+#                 "provider_id": "google",
+#                 "name": "Google",
+#                 "client_id": env("GOOGLE_CLIENT_ID"),
+#                 "secret": env("GOOGLE_CLIENT_SECRET"),
+#                 "settings": {
+#                     "server_url": "https://accounts.google.com",
+#                     "token_auth_method": "client_secret_basic",
+#                 },
+#             }
+#         ]
+#     }
+# }
+
+SITE_ID=1

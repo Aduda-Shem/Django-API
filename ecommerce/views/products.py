@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions, status
-from oauth2_provider.contrib.rest_framework import OAuth2Authentication
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from ecommerce.models.products import Product
 from ecommerce.serializers.products import ProductSerializer
 from django.db.models import Q
@@ -11,8 +11,7 @@ class ProductViewApi(generics.ListAPIView):
     """
     This the Class-based View for managing Products
     """
-    authentication_classes = [OAuth2Authentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = ProductSerializer
 
     def get_queryset(self):

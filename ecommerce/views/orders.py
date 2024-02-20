@@ -1,7 +1,7 @@
 import threading
 from ecommerce.models.orders import CartItem, Order, OrderItem, ShoppingCart
 from ecommerce.models.products import Product
-from ecommerce.models.users import CustomerProfile
+from ecommerce.models.users import User
 from ecommerce.serializers.orders import CartItemSerializer, OrderItemSerializer, OrderSerializer, ShoppingCartSerializer
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -125,9 +125,9 @@ class OrderView(generics.GenericAPIView):
         status = formData.get('status')
 
         try:
-            customer_profile = CustomerProfile.objects.get(user=user)
+            customer_profile = User.objects.get(user=user)
             phone_number = customer_profile.phone_number
-        except CustomerProfile.DoesNotExist:
+        except User.DoesNotExist:
             phone_number = None
 
         order = Order.objects.create(
