@@ -11,20 +11,18 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 import environ
+from pathlib import Path
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
 
 env = environ.Env()
 environ.Env.read_env()
 
-from pathlib import Path
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 SECRET_KEY = env("SECRET_KEY")
 
-# DEBUG = env("DEBUG")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -38,19 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    # auth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.openid_connect',
-    
-    'crispy_forms',
-
     'drf_yasg',
+    'oauth2_provider',
+    'rest_framework.authtoken',
     'rest_framework',
     'rest_framework_swagger',
     'corsheaders', 
     'knox',
+
     'ecommerce',
 ]
 
@@ -66,7 +59,7 @@ MIDDLEWARE = [
 
     "allauth.account.middleware.AccountMiddleware",
 
-    ]
+]
 
 ROOT_URLCONF = 'ecommerce_api.urls'
 
@@ -94,7 +87,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -113,7 +105,6 @@ DATABASES = {
     }
 }
 
-# Africa's Talking configurations
 AFRICASTALKING_USERNAME = env("AFRICASTALKING_USERNAME")
 AFRICASTALKING_API_KEY = env("AFRICASTALKING_API_KEY")
 AFRICASTALKING_SENDER_ID = env("AFRICASTALKING_SENDER_ID")
@@ -147,33 +138,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_ID=1
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-SOCIALACCOUNT_PROVIDERS = {
-    "openid_connect": {
-        "APPS": [
-            {
-                "provider_id": "google",
-                "name": "Google",
-                "client_id": env("GOOGLE_CLIENT_ID"),
-                "secret": env("GOOGLE_CLIENT_SECRET"),
-                "settings": {
-                    "server_url": "https://accounts.google.com",
-                    "token_auth_method": "client_secret_basic",
-                },
-            },
-
-            # {
-            #     "provider_id": "github",
-            #     "name": "GitHub",
-            #     "client_id": env("GITHUB_CLIENT_ID"),
-            #     "secret": env("GITHUB_CLIENT_SECRET"),
-            #     "settings": {
-            #         "server_url": "https://github.com",
-            #         "token_auth_method": "client_secret_basic",
-            #     },
-            # },
-        ]
-    }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+PRIVATE_KEY = rsa.generate_private_key(public_exponent=65537, key_size=4096, backend=default_backend())
+OIDC_RSA_PRIVATE_KEY  = PRIVATE_KEY.private_bytes(encoding=serialization.Encoding.PEM, format=serialization.PrivateFormat.TraditionalOpenSSL, encryption_algorithm=serialization.NoEncryption()).decode("utf-8")
+
+OAUTH2_PROVIDER = {
+    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 300,
+    "OIDC_ENABLED": True,
+    "OIDC_RSA_PRIVATE_KEY": OIDC_RSA_PRIVATE_KEY,
+    "SCOPES": {
+        "openid": "OpenID Connect scope",
+    },
+}
