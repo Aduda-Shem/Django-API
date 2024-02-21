@@ -4,12 +4,14 @@ from ecommerce.models.products import Product
 from ecommerce.serializers.products import ProductSerializer
 from django.core.paginator import Paginator, EmptyPage
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 
 class ProductViewApi(generics.GenericAPIView):
     """
     This is the Class-based View for managing Products
     """
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    # permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['openid']
     serializer_class = ProductSerializer
 

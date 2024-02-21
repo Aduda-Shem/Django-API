@@ -65,7 +65,7 @@ Django is a high-level Python Web framework that encourages rapid development an
 
 3. **Include OAuth URLs:**
     Include `oauth2_provider.urls` in `urls.py`.
-
+ 
 4. **Set LOGIN_URL in settings.py:**
     Set `LOGIN_URL='/admin/login/'` in `iam/settings.py`.
 
@@ -76,11 +76,16 @@ Django is a high-level Python Web framework that encourages rapid development an
 
 6. **Authorization Code Flow:**
     - Register an application.
-    ![Alt text](<applocatin register.png>)
+    ![Alt text](registerapp.png)
 
     - Authorize the web app.
-    ![Alt text](authorizeconfirm.png)
+    ![Alt text](authorize.png)
 
     - Obtain an access token.
-    ![Alt text](acesstoken.png)
+    `http://127.0.0.1:8000/o/authorize/?response_type=code&code_challenge=x00bLi98SBgwXewDAZ6OsVxVpTqaphvbTVG7vVrRNr4&code_challenge_method=S256&client_id=hUn9pxrpL0MinLPTyCcTv7zzbgCaXDrsAW84dweS&redirect_uri=http://localhost:8000/o/callbak&scope=openid`
 
+    `http://127.0.0.1:8000/o/callbak?code=lux5uTBJIbsOPbMuvDcI5TVtUGsxA6`
+
+![Alt text](authcode.png)
+
+![Alt text](generate_access_token.png)
