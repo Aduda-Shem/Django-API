@@ -1,18 +1,16 @@
 from rest_framework import generics, permissions, status
-from oauth2_provider.contrib.rest_framework import OAuth2Authentication
+from oauth2_provider.contrib.rest_framework import TokenHasScope
 from ecommerce.models.products import Product
 from ecommerce.serializers.products import ProductSerializer
-from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
-class ProductViewApi(generics.ListAPIView):
+class ProductViewApi(generics.GenericAPIView):
     """
-    This the Class-based View for managing Products
+    This is the Class-based View for managing Products
     """
-    authentication_classes = [OAuth2Authentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['openid']
     serializer_class = ProductSerializer
 
     def get_queryset(self):
@@ -49,59 +47,70 @@ class ProductViewApi(generics.ListAPIView):
         }, status=status.HTTP_200_OK)
 
     def post(self, request):
-        formData = request.data
-        name = formData.get('name')
-        description = formData.get('description')
-        price = formData.get('price')
-        stock = formData.get('stock')
+        name = request.data.get('name')
+        description = request.data.get('description')
+        price = request.data.get('price')
+        stock = request.data.get('stock')
 
-        product = Product(
+        product = Product.objects.create(
             name=name,
             description=description,
             price=price,
             stock=stock
         )
-        product.save()
+
+        serializer = self.serializer_class(product)
 
         return Response({
             'message': "Product has been added successfully",
-            'product': ProductSerializer(product).data,
+            'product': serializer.data,
         }, status=status.HTTP_201_CREATED)
 
     def put(self, request, pk=None):
-        formData = request.data
-        pk = formData.get('id')
+        pk = request.data.get('id')
         
         try:
             product = Product.objects.get(pk=pk)
         except Product.DoesNotExist:
             return Response({
                 "message": "Product does not exist."
-                },)
+            }, status=status.HTTP_404_NOT_FOUND)
 
-        product.name = formData.get('name', product.name)
-        product.description = formData.get('description', product.description)
-        product.price = formData.get('price', product.price)
-        product.stock = formData.get('stock', product.stock)
+        name = request.data.get('name')
+        description = request.data.get('description')
+        price = request.data.get('price')
+        stock = request.data.get('stock')
+
+        if name:
+            product.name = name
+        if description:
+            product.description = description
+        if price:
+            product.price = price
+        if stock:
+            product.stock = stock
 
         product.save()
 
+        serializer = self.serializer_class(product)
+
         return Response({
             'message': "Product has been updated",
-            'product': ProductSerializer(product).data,
+            'product': serializer.data,
         }, status=status.HTTP_200_OK)
 
     def delete(self, request):
-        try:
-            product = request.query_params.get('id')
-            product = Product.objects.get(pk=product)
-            product.delete()
+        product_id = request.query_params.get('id')
+        if not product_id:
+            return Response({
+                "message": "Please provide the product ID."
+            }, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            product = Product.objects.get(pk=product_id)
+            product.delete()
             return Response({
                 'message': 'Product deleted successfully',
             }, status=status.HTTP_200_OK)
         except Product.DoesNotExist:
             return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
-        except Exception as e:
-            content = {'error': 'Error deleting the Product'}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
