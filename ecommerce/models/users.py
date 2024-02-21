@@ -3,14 +3,15 @@ import uuid
 
 class Customer(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    first_name = models.CharField(max_length=250, verbose_name='First Name', null=False, blank=False)
-    last_name = models.CharField(max_length=250, verbose_name='Last Name', null=False, blank=False)
+    full_name = models.CharField(max_length=500, verbose_name='Full Name', null=False, blank=False)
+    code = models.CharField(max_length=50, verbose_name='Code', null=False, blank=False, unique=True)
     phone_number = models.CharField(max_length=250, verbose_name='Phone Number', null=False, blank=False)
-    date_created = models.DateTimeField(verbose_name='Date Created',auto_now_add=True)
-    date_modified = models.DateTimeField(verbose_name='Date Modified',auto_now=True)
+    date_created = models.DateTimeField(verbose_name='Date Created', auto_now_add=True)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return self.full_name
     
     class Meta:
-        verbose_name_plural = 'Customers'
+        db_table = "Customers"
+        verbose_name = "Customer"
+        verbose_name_plural = "Customers"
