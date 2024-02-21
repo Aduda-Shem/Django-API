@@ -56,9 +56,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-
-    "allauth.account.middleware.AccountMiddleware",
-
 ]
 
 ROOT_URLCONF = 'ecommerce_api.urls'
@@ -89,7 +86,6 @@ STATICFILES_DIRS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'ecommerce_api.wsgi.application'
@@ -138,12 +134,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_ID=1
 
+LOGIN_URL = '/admin/login/'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -153,9 +150,12 @@ REST_FRAMEWORK = {
 PRIVATE_KEY = rsa.generate_private_key(public_exponent=65537, key_size=4096, backend=default_backend())
 OIDC_RSA_PRIVATE_KEY  = PRIVATE_KEY.private_bytes(encoding=serialization.Encoding.PEM, format=serialization.PrivateFormat.TraditionalOpenSSL, encryption_algorithm=serialization.NoEncryption()).decode("utf-8")
 
+
 OAUTH2_PROVIDER = {
     'AUTHORIZATION_CODE_EXPIRE_SECONDS': 300,
     "OIDC_ENABLED": True,
+    "OIDC_RP_INITIATED_LOGOUT_ENABLED": True,
+    "OIDC_RP_INITIATED_LOGOUT_ALWAYS_PROMPT": True,
     "OIDC_RSA_PRIVATE_KEY": OIDC_RSA_PRIVATE_KEY,
     "SCOPES": {
         "openid": "OpenID Connect scope",

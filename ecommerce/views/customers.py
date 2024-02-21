@@ -1,3 +1,5 @@
+from ecommerce.models.users import Customer
+from ecommerce.serializers.users import CustomerSerializer
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from oauth2_provider.contrib.rest_framework import TokenHasScope
