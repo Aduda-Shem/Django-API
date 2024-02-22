@@ -1,3 +1,4 @@
+
 # Django API - E-Commerce
 
 ## Table of Contents
@@ -22,18 +23,16 @@ This is a Customer Order Management System API built with Django. It allows you 
 
 3. Build and start the Docker containers:
     ```bash
-    docker compose up --build
+    docker-compose up --build
     ```
 
 4. The server will start running at `http://localhost:8000`.
 
 ## Testing
-To run the tests, execute:
-    ```bash
-        python manage.py test
-    ```
-
-
+To run the tests, Execute 
+```bash
+python manage.py test
+```
 
 ## Additional Information
 - Ensure Docker and Docker Compose are installed on your system.
@@ -95,7 +94,7 @@ OAuth is an open standard for access delegation, commonly used to grant websites
     ```
     Login into the admin then browse to `http://127.0.0.1:8000/o/applications/register/` to register a new application
 
-    Before saving, copy the `client id` and `client secret` , set the Redirect url as `http://127.0.0.1:8000/o/callback`
+    Before saving, copy the `client id` and `client secret` , set the Redirect url : `http://127.0.0.1:8000/o/callback`
     
 
 6. **Authorization Code Flow:**
