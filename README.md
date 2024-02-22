@@ -131,7 +131,8 @@ OAuth is an open standard for access delegation, commonly used to grant websites
 
     ```
     - Authorize the web app.
-        ![Alt text](READMEscreenshots/authorize.png)
+
+    ![Alt text](READMEscreenshots/authcode.png)
         
     - Obtain an access token.
     ```
