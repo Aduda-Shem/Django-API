@@ -134,10 +134,13 @@ OAuth is an open standard for access delegation, commonly used to grant websites
         ![Alt text](READMEscreenshots/authorize.png)
         
     - Obtain an access token.
-    `http://127.0.0.1:8000/o/authorize/?response_type=code&code_challenge=x00bLi98SBgwXewDAZ6OsVxVpTqaphvbTVG7vVrRNr4&code_challenge_method=S256&client_id=hUn9pxrpL0MinLPTyCcTv7zzbgCaXDrsAW84dweS&redirect_uri=http://localhost:8000/o/callbak&scope=openid`
+    ```
+        http://127.0.0.1:8000/o/authorize/?response_type=code&code_challenge=x00bLi98SBgwXewDAZ6OsVxVpTqaphvbTVG7vVrRNr4&code_challenge_method=S256&client_id=hUn9pxrpL0MinLPTyCcTv7zzbgCaXDrsAW84dweS&redirect_uri=http://localhost:8000/o/callbak&scope=openid
 
+    ```
+    - The above will redirect and generate a code
     `http://127.0.0.1:8000/o/callbak?code=lux5uTBJIbsOPbMuvDcI5TVtUGsxA6`
+    ![Alt text](REAeDMEscreenshots/authcode.png)
 
-![Alt text](authcode.png)
-
-![Alt text](generate_access_token.png)
+    - Now We will head over to postman to generate the toke we will use to authenticate our views
+    ![Alt text](READMEscreenshots/generate_access_token.png)
