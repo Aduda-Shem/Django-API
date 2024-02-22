@@ -178,4 +178,4 @@ Each resource (customers, products, orders) is managed by a single API endpoint,
    ![Delete Order](READMEscreenshots/orderDelete.png)
 
 ## Postman Collection
-[Title](postman/postman_collection.json)
+[Download Postman Collection](postman/postman_collection.json)
