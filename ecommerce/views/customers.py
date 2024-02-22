@@ -7,6 +7,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 class CustomerViewApi(generics.GenericAPIView):
+    """
+    Class Based View fro managing customers
+    """
     permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['openid']    
     serializer_class = CustomerSerializer

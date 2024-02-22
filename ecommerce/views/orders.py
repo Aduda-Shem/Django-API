@@ -11,9 +11,12 @@ from rest_framework.permissions import IsAuthenticated
 from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 class OrderViewApi(generics.GenericAPIView):
+    """
+    Class Based View for managing orders
+    """
     permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['openid']    
-    
+
     def get_queryset(self):
         return Order.objects.all()
 

@@ -49,13 +49,4 @@ class OrderFactory(DjangoModelFactory):
             return
 
         if extracted:
-            # Assuming extracted is a list of Product instances
-            product_data = []
-            for product in extracted:
-                product_data.append({
-                    'id': product.id,
-                    'name': product.name,
-                    'description': product.description,
-                    'price': str(product.price),  # Convert Decimal to string
-                })
-            self.products = product_data
+            self.products.add(*extracted)

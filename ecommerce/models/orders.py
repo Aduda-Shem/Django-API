@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 import uuid
 
 class Order(models.Model):
+    """
+    Order Models
+    """
     PENDING = 'Pending'
     APPROVED = 'Approved'
     DELIVERED = 'Delivered'

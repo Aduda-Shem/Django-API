@@ -2,6 +2,9 @@ from django.db import models
 import uuid
 
 class Customer(models.Model):
+    """
+     Customer Models
+    """
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     full_name = models.CharField(max_length=500, verbose_name='Full Name', null=False, blank=False)
     code = models.CharField(max_length=50, verbose_name='Code', null=False, blank=False, unique=True)

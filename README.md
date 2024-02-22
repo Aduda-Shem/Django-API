@@ -32,7 +32,15 @@ This is a Customer Order Management System API built with Django. It allows you 
 ## Testing
 To run the tests, Execute 
 ```bash
-python manage.py test
+coverage run manage.py test
+```
+To view Coverage Report
+```bash
+coverage report
+```
+To generate coverage HTML Report
+```bash
+coverage html
 ```
 
 ## Additional Information

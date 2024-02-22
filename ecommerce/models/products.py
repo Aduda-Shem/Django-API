@@ -3,6 +3,9 @@ from simple_history.models import HistoricalRecords
 import uuid
 
 class Product(models.Model):
+    """
+     Product Models
+    """
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -13,6 +16,9 @@ class Product(models.Model):
         return self.name
 
 class Stock(models.Model):
+    """
+     Stock Models
+    """
     product = models.ForeignKey(
         Product, verbose_name="Product", on_delete=models.CASCADE, related_name='product_stock')
     quantity = models.IntegerField()
