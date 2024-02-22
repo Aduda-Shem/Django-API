@@ -30,10 +30,9 @@ This is a Customer Order Management System API built with Django. It allows you 
 
 ## Testing
 To run the tests, execute:
-  ```bash
-  python manage.py test
+    ```bash
+        python manage.py test
     ```
-
 
 ## API Endpoints
    - `http://localhost:8000/customers`
