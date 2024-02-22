@@ -4,10 +4,9 @@
 1. [Introduction](#introduction)
 2. [Setup Instructions](#setup-instructions)
 3. [Testing](#testing)
-4. [API Endpoints](#api-endpoints)
+4. [Additional Information](#additional-information)
 5. [Authentication and Authorization](#authentication-and-authorization)
 6. [API Documentation](#api-documentation)
-7. [Additional Information](#additional-information)
 
 ## Introduction
 This is a Customer Order Management System API built with Django. It allows you to manage customers, products, and orders efficiently with authentication and authorization using OpenID Connect.
