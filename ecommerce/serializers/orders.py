@@ -1,17 +1,15 @@
-from ecommerce.models.orders import Order, OrderItem
+from ecommerce.models.orders import Order
+from ecommerce.models.users import Customer
 from rest_framework import serializers
 
-
-class OrderItemSerializer(serializers.ModelSerializer):
+class CustomerOrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderItem
-        fields = ['id', 'product', 'quantity']
-        
+        model = Customer
+        fields = ['id', 'full_name']
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True)
+    customer = CustomerOrderSerializer()
 
     class Meta:
         model = Order
-        fields = ['id', 'status', 'order_items']
-        read_only_fields = ['id']
+        fields = ['uuid', 'customer', 'created_at', 'status', 'total_amount', 'products']
