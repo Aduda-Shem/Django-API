@@ -34,17 +34,14 @@ To run the tests, execute:
         python manage.py test
     ```
 
-## API Endpoints
-   - `http://localhost:8000/customers`
-   - `http://localhost:8000/products`
-   - `http://localhost:8000/products`
+
 
 ## Additional Information
 - Ensure Docker and Docker Compose are installed on your system.
 - Authentication is required for endpoints that modify / retrieve data. Use Token Authentication to authenticate requests, To obtain TOkens follow the steps below:
 
 ------------------------------------------
-# Authentication and Authorization
+## Authentication and Authorization
 
 To set up authentication and authorization using OpenID Connect:
 
@@ -147,7 +144,12 @@ OAuth is an open standard for access delegation, commonly used to grant websites
 
     - Bingo!!!!, Now we use the `access_token` as Authorization : Bearer `TOKEN`
 
-7. **APIs:**
+## API Documentation
+# API Endpoints
+    Each resource (customers, products, orders) is managed by a single API endpoint, which performs Create, Read, Update, and Delete (CRUD) operations based on the HTTP method and query parameters passed.
+   - `http://localhost:8000/customers`
+   - `http://localhost:8000/products`
+   - `http://localhost:8000/products`
 
    `Product`
    - POST - Add Product

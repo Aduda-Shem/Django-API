@@ -5,13 +5,15 @@ from ecommerce.serializers.orders import OrderSerializer
 from ecommerce.utils.send_sms import send_sms
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 from ecommerce.models import Order
 from django.core.paginator import Paginator, EmptyPage
+from rest_framework.permissions import IsAuthenticated
+from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 class OrderViewApi(generics.GenericAPIView):
-    permission_classes = [AllowAny]
-
+    permission_classes = [IsAuthenticated, TokenHasScope]
+    required_scopes = ['openid']    
+    
     def get_queryset(self):
         return Order.objects.all()
 

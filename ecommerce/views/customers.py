@@ -3,10 +3,12 @@ from ecommerce.models.users import Customer
 from ecommerce.serializers.users import CustomerSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 class CustomerViewApi(generics.GenericAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, TokenHasScope]
+    required_scopes = ['openid']    
     serializer_class = CustomerSerializer
 
     def get_queryset(self):
