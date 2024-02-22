@@ -147,3 +147,32 @@ OAuth is an open standard for access delegation, commonly used to grant websites
     - Now We will head over to postman to generate the toke we will use to authenticate our views
     ![Alt text](READMEscreenshots/generate_access_token.png)
 
+    - Bingo!!!!, Now we use the `access_token` as Authorization : Bearer TOKEN
+
+7. **APIS:**
+   `Product`
+   - POST
+   ![Alt text](READMEscreenshots/prooductadd.png)
+   - GET
+   ![Alt text](READMEscreenshots/getproducts.png)
+   - PUT
+   ![Alt text](<READMEscreenshots/Screenshot at 2024-02-22 11-36-17.png>)
+   - DELETE
+   ![Alt text](READMEscreenshots/productdelete.png)
+
+   `Customers`
+   - POST
+   ![Alt text](READMEscreenshots/AddCustomer.png)
+   - GET
+
+   - PUT
+
+   - DELETE
+
+   `Order`
+   - GET
+   ![Alt text](READMEscreenshots/orderget.png)
+   - POST
+   ![Alt text](READMEscreenshots/orderpost.png)
+   -DELETE
+
