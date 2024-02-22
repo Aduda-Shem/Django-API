@@ -38,11 +38,10 @@ INSTALLED_APPS = [
 
     'drf_yasg',
     'oauth2_provider',
-    'rest_framework.authtoken',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
     'corsheaders', 
-    'knox',
 
     'ecommerce',
 ]
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 
 
 ]
@@ -150,14 +148,6 @@ LOGIN_URL = '/admin/login/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
-}
 
 PRIVATE_KEY = rsa.generate_private_key(public_exponent=65537, key_size=4096, backend=default_backend())
 OIDC_RSA_PRIVATE_KEY  = PRIVATE_KEY.private_bytes(encoding=serialization.Encoding.PEM, format=serialization.PrivateFormat.TraditionalOpenSSL, encryption_algorithm=serialization.NoEncryption()).decode("utf-8")
