@@ -33,23 +33,30 @@ class CustomerViewApi(generics.GenericAPIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         serialized_data = self.serializer_class(customers_page, many=True).data
-        return Response(
-            serialized_data, 
-            status=status.HTTP_200_OK
-            )
+        return Response({
+            "message": "Customers Fetched Successfully!",
+            "customers": serialized_data,
+            "last_page": paginator.num_pages,
+            "pagination": {
+                "currentPage": page_number,
+                "total": paginator.count,
+                "pageSize": rows
+            }
+        }, status=status.HTTP_200_OK)
+
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                serializer.data, 
-                status=status.HTTP_201_CREATED
-                )
-        return Response(
-            serializer.errors, 
-            status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({
+                "message": "Customer Created Successfully!",
+                "customer": serializer.data
+            }, status=status.HTTP_201_CREATED)
+        return Response({
+            "error": "Invalid Data!",
+            "details": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk=None):
         pk = request.data.get('id')
@@ -63,14 +70,14 @@ class CustomerViewApi(generics.GenericAPIView):
         serializer = self.serializer_class(customer, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                serializer.data, 
-                status=status.HTTP_200_OK
-                )
-        return Response(
-            serializer.errors, 
-            status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({
+                "message": "Customer Updated Successfully!",
+                "customer": serializer.data
+            }, status=status.HTTP_200_OK)
+        return Response({
+            "error": "Invalid Data!",
+            "details": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
         customer_id = request.data.get('customer_id')

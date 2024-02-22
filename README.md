@@ -1,52 +1,51 @@
-# 🚀 Django API - E-Commerce 📦
+# Django API - E-Commerce
 
-Customer Order Management System API! This API allows you to manage customers, products, and orders efficiently with authentication and authorization using OpenID Client(specifically the oauth2_provider).
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Setup Instructions](#setup-instructions)
+3. [Testing](#testing)
+4. [API Endpoints](#api-endpoints)
+5. [Authentication and Authorization](#authentication-and-authorization)
+6. [API Documentation](#api-documentation)
+7. [Additional Information](#additional-information)
 
-## 🔧 Setup Instructions
+## Introduction
+This is a Customer Order Management System API built with Django. It allows you to manage customers, products, and orders efficiently with authentication and authorization using OpenID Connect.
+
+## Setup Instructions
 1. Clone the repository:
-    ```
+    ```bash
     git clone https://github.com/Aduda-Shem/Django-API.git
+    cd Django-API
     ```
-2. Navigate to the project directory:
-        ```
-        cd Django-API
-        ```
 
-3. Create a `.env` file in the root directory with the content from `.env.example` as env sample.
-        ```
-        touch .env
-        ```
+2. Create a `.env` file in the root directory with the content from `.env.example`.
 
-4. The docker is run using docker containers, To Build and start the Docker containers:
-    ```
+3. Build and start the Docker containers:
+    ```bash
     docker compose up --build
     ```
 
-5. The server will start running at `http://localhost:8000`.
+4. The server will start running at `http://localhost:8000`.
 
-6. ## 🧪 Testing
-The test files are located under the `tests` directory with different files:
-    - `test_models.py`
-    - `test_serializers.py`
-    - `test_views.py`
-  
-To run the tests
-    ```
-    python manage.py test
+## Testing
+To run the tests, execute:
+  ```bash
+  python manage.py test
     ```
 
 
-## 📋 API Endpoints
+## API Endpoints
    - `http://localhost:8000/customers`
    - `http://localhost:8000/products`
    - `http://localhost:8000/products`
 
-## 💡 Additional Information
+## Additional Information
 - Ensure Docker and Docker Compose are installed on your system.
 - Authentication is required for endpoints that modify / retrieve data. Use Token Authentication to authenticate requests, To obtain TOkens follow the steps below:
 
 ------------------------------------------
-# 🔒 Authentication and Authorization
+# Authentication and Authorization
 
 To set up authentication and authorization using OpenID Connect:
 
@@ -106,11 +105,11 @@ OAuth is an open standard for access delegation, commonly used to grant websites
 
 6. **Authorization Code Flow:**
     - Register an application.
-        ![Alt text](READMEscreenshots/registerapp.png)
+        ![Register Application](READMEscreenshots/registerapp.png)
     
     - generate an authentication code grant with PKCE (Proof Key for Code Exchange), useful to prevent authorization code injection.
-    We do this by generating a `code_verifier` random string between 43 and 128 characters, encided to produce a `code_challenge`, sample script:
-    ```
+    We do this by generating a `code_verifier` random string between 43 and 128 characters, encoded to produce a `code_challenge`, sample script:
+    ```python
     import random
     import string
     import base64
@@ -132,7 +131,7 @@ OAuth is an open standard for access delegation, commonly used to grant websites
     ```
     - Authorize the web app.
 
-    ![Alt text](READMEscreenshots/authorize.png)   
+    ![Authorize](READMEscreenshots/authorize.png)   
 
     - Obtain an access token.
     ```
@@ -142,37 +141,40 @@ OAuth is an open standard for access delegation, commonly used to grant websites
     - The above will redirect and generate a code
     `http://127.0.0.1:8000/o/callbak?code=[CODE]`
 
-    ![Alt text](READMEscreenshots/authcode.png)
+    ![Auth Code](READMEscreenshots/authcode.png)
 
-    - Now We will head over to postman to generate the toke we will use to authenticate our views
-    ![Alt text](READMEscreenshots/generate_access_token.png)
+    - Now We will head over to Postman to generate the token we will use to authenticate our views
+    ![Generate Access Token](READMEscreenshots/generate_access_token.png)
 
-    - Bingo!!!!, Now we use the `access_token` as Authorization : Bearer TOKEN
+    - Bingo!!!!, Now we use the `access_token` as Authorization : Bearer `TOKEN`
 
-7. **APIS:**
+7. **APIs:**
+
    `Product`
-   - POST
-   ![Alt text](READMEscreenshots/prooductadd.png)
-   - GET
-   ![Alt text](READMEscreenshots/getproducts.png)
-   - PUT
-   ![Alt text](<READMEscreenshots/Screenshot at 2024-02-22 11-36-17.png>)
-   - DELETE
-   ![Alt text](READMEscreenshots/productdelete.png)
+   - POST - Add Product
+   ![Add Product](READMEscreenshots/prooductadd.png)
+   - GET - Retrieve Products
+   ![Retrieve Products](READMEscreenshots/getproducts.png)
+   - PUT - Update a Product
+   ![Update Product](READMEscreenshots/putproduct.png)
+   - DELETE - Delete a Product
+   ![Delete Product](READMEscreenshots/productdelete.png)
 
    `Customers`
-   - POST
-   ![Alt text](READMEscreenshots/AddCustomer.png)
-   - GET
-
-   - PUT
-
-   - DELETE
+   - POST - Add a Customer
+   ![Add Customer](READMEscreenshots/AddCustomer.png)
+   - GET - Retrieve a Customer
+   ![Retrieve Customer](READMEscreenshots/getcustomers.png)
+   - PUT - Update a Customer
+   ![Update Customer](READMEscreenshots/putcustomers.png)
+   - DELETE - Delete a Customer
+   ![Delete Customer](READMEscreenshots/customerdelete.png)
 
    `Order`
-   - GET
-   ![Alt text](READMEscreenshots/orderget.png)
-   - POST
-   ![Alt text](READMEscreenshots/orderpost.png)
-   -DELETE
+   - GET - Retrieve Orders
+   ![Retrieve Orders](READMEscreenshots/orderget.png)
+   - POST - Add Order
+   ![Add Order](READMEscreenshots/orderpost.png)
+   - DELETE - Delete an Order
+   ![Delete Order](READMEscreenshots/orderDelete.png)
 

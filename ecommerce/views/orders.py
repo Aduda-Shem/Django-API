@@ -32,7 +32,16 @@ class OrderViewApi(generics.GenericAPIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         serialized_data = OrderSerializer(orders_page, many=True).data
-        return Response(serialized_data, status=status.HTTP_200_OK)
+        return Response({
+            "message": "Orders Fetched Successfully!",
+            "orders": serialized_data,
+            "last_page": paginator.num_pages,
+            "pagination": {
+                "currentPage": page_number,
+                "total": paginator.count,
+                "pageSize": rows
+            }
+        }, status=status.HTTP_200_OK)
 
 
     def post(self, request):
@@ -51,7 +60,7 @@ class OrderViewApi(generics.GenericAPIView):
             product_data = {
                 'id': product.id,
                 'name': product.name,
-                'price': str(product.price),  # Convert Decimal to string
+                'price': str(product.price),
                 'quantity': item.get('quantity')
             }
             products_data.append(product_data)
@@ -68,7 +77,6 @@ class OrderViewApi(generics.GenericAPIView):
         sms_thread = threading.Thread(target=send_sms, args=(customer_phone_number, message))
         sms_thread.start()
 
-        # Serialize the order data
         order_data = OrderSerializer(order).data
 
         return Response({'message': 'Order created successfully', 'order': order_data}, status=status.HTTP_201_CREATED)
@@ -88,4 +96,6 @@ class OrderViewApi(generics.GenericAPIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
         order.delete()
-        return Response({'message': 'Order deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({
+            'message': 'Order deleted successfully'}, 
+            status=status.HTTP_204_NO_CONTENT)
