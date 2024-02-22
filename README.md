@@ -8,6 +8,7 @@
 4. [Additional Information](#additional-information)
 5. [Authentication and Authorization](#authentication-and-authorization)
 6. [API Documentation](#api-documentation)
+7. [Postman Collection](#postman-collection)
 
 ## Introduction
 This is a Customer Order Management System API built with Django. It allows you to manage customers, products, and orders efficiently with authentication and authorization using OpenID Connect.
@@ -176,3 +177,5 @@ Each resource (customers, products, orders) is managed by a single API endpoint,
    - DELETE - Delete an Order
    ![Delete Order](READMEscreenshots/orderDelete.png)
 
+## Postman Collection
+[Title](postman/postman_collection.json)
