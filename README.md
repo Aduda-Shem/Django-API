@@ -145,8 +145,7 @@ OAuth is an open standard for access delegation, commonly used to grant websites
     - Bingo!!!!, Now we use the `access_token` as Authorization : Bearer `TOKEN`
 
 ## API Documentation
-# API Endpoints
-    Each resource (customers, products, orders) is managed by a single API endpoint, which performs Create, Read, Update, and Delete (CRUD) operations based on the HTTP method and query parameters passed.
+Each resource (customers, products, orders) is managed by a single API endpoint, which performs Create, Read, Update, and Delete (CRUD) operations based on the HTTP method and query parameters passed.
    - `http://localhost:8000/customers`
    - `http://localhost:8000/products`
    - `http://localhost:8000/products`
