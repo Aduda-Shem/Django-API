@@ -8,7 +8,7 @@ from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 class ProductViewApi(generics.GenericAPIView):
     """
-    Class Based View fro managing products
+    Class Based View for managing products
     """
     permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['openid']    
@@ -49,21 +49,26 @@ class ProductViewApi(generics.GenericAPIView):
         }, status=status.HTTP_200_OK)
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            product = serializer.save()
+        name = request.data.get('name')
+        description = request.data.get('description')
+        price = request.data.get('price')
+        quantity = request.data.get('quantity')
 
-            # Create stock
-            Stock.objects.create(product=product, quantity=product.quantity)
+        product = Product(
+            name=name,
+            description=description,
+            price=price,
+            quantity=quantity
+        )
+        product.save()
 
-            return Response({
-                "message": "Product Created Successfully!",
-                "product": serializer.data
-            }, status=status.HTTP_201_CREATED)
+        # Create stock
+        Stock.objects.create(product=product, quantity=quantity)
+
         return Response({
-            "error": "Invalid Data!",
-            "details": serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
+            "message": "Product Created Successfully!",
+            "product": self.serializer_class(product).data
+        }, status=status.HTTP_201_CREATED)
 
     def put(self, request, pk=None):
         pk = request.data.get('id')
@@ -74,23 +79,22 @@ class ProductViewApi(generics.GenericAPIView):
                 "message": "Product does not exist."
             }, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = self.serializer_class(product, data=request.data)
-        if serializer.is_valid():
-            product = serializer.save()
+        product.name = request.data.get('name', product.name)
+        product.description = request.data.get('description', product.description)
+        product.price = request.data.get('price', product.price)
+        product.quantity = request.data.get('quantity', product.quantity)
 
-            # Update stock
-            stock, _ = Stock.objects.get_or_create(product=product)
-            stock.quantity = product.quantity
-            stock.save()
+        product.save()
 
-            return Response({
-                "message": "Product Updated Successfully!",
-                "product": serializer.data
-            }, status=status.HTTP_200_OK)
+        # Update stock
+        stock, _ = Stock.objects.get_or_create(product=product)
+        stock.quantity = product.quantity
+        stock.save()
+
         return Response({
-            "error": "Invalid Data!",
-            "details": serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
+            "message": "Product Updated Successfully!",
+            "product": self.serializer_class(product).data
+        }, status=status.HTTP_200_OK)
 
     def delete(self, request):
         product_id = request.data.get('product_id')

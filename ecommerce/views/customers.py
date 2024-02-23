@@ -8,7 +8,7 @@ from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 class CustomerViewApi(generics.GenericAPIView):
     """
-    Class Based View fro managing customers
+    Class Based View for managing customers
     """
     permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['openid']    
@@ -51,17 +51,21 @@ class CustomerViewApi(generics.GenericAPIView):
 
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({
-                "message": "Customer Created Successfully!",
-                "customer": serializer.data
-            }, status=status.HTTP_201_CREATED)
+        full_name = request.data.get('full_name')
+        code = request.data.get('code')
+        phone_number = request.data.get('phone_number')
+
+        customer = Customer(
+            full_name=full_name,
+            code=code,
+            phone_number=phone_number
+        )
+        customer.save()
+
         return Response({
-            "error": "Invalid Data!",
-            "details": serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
+            "message": "Customer Created Successfully!",
+            "customer": self.serializer_class(customer).data
+        }, status=status.HTTP_201_CREATED)
 
     def put(self, request, pk=None):
         pk = request.data.get('id')
@@ -72,17 +76,20 @@ class CustomerViewApi(generics.GenericAPIView):
                 "message": "Customer does not exist."
             }, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = self.serializer_class(customer, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({
-                "message": "Customer Updated Successfully!",
-                "customer": serializer.data
-            }, status=status.HTTP_200_OK)
+        full_name = request.data.get('full_name', customer.full_name)
+        code = request.data.get('code', customer.code)
+        phone_number = request.data.get('phone_number', customer.phone_number)
+
+        customer.full_name = full_name
+        customer.code = code
+        customer.phone_number = phone_number
+
+        customer.save()
+
         return Response({
-            "error": "Invalid Data!",
-            "details": serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
+            "message": "Customer Updated Successfully!",
+            "customer": self.serializer_class(customer).data
+        }, status=status.HTTP_200_OK)
 
     def delete(self, request):
         customer_id = request.data.get('customer_id')
