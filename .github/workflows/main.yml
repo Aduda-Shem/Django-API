@@ -26,16 +26,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # - name: Run unit tests with coverage
-    #   run: |
-    #     coverage run --source='.' manage.py test
-    #     coverage report -m
+    - name: Run unit tests with coverage
+      run: |
+        coverage run --source='.' manage.py test
+        coverage report -m
 
-    # - name: Upload coverage report
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: coverage-report
-    #     path: coverage.xml
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: coverage.xml
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: <your-aws-region>
+        aws-region:  ${{ secrets.AWS_REGION }}
 
     - name: Deploy to Kubernetes using Helm
       run: |
