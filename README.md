@@ -209,4 +209,9 @@ This deployment setup includes:
 1. SSH into your EC2 instance and clone this repository.
 2. Copy your `.env` file and Docker Compose files to the EC2 instance.
 3. Run `docker-compose -f docker-compose.yml -f docker-compose-deploy.yml up -d` to deploy your Django API.
+
+![Alt text](READMEscreenshots/awsup.png)
+
+![Alt text](READMEscreenshots/awsinstance.png)
+
 4. Access your Django API through the public IP or domain name of your EC2 instance.
