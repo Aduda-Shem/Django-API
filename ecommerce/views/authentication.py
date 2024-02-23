@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-
+# Functions to print the Authorization code 
 def oauth_openid_callback(request):
     code = request.GET.get('code')
 
