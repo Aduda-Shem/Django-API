@@ -70,10 +70,15 @@ class ProductViewApi(generics.GenericAPIView):
             "product": self.serializer_class(product).data
         }, status=status.HTTP_201_CREATED)
 
-    def put(self, request, pk=None):
-        pk = request.data.get('id')
+    def put(self, request):
+        product_id = request.data.get('product_id')
+        if not product_id:
+            return Response({
+                "message": "Please provide the product ID."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            product = Product.objects.get(pk=pk)
+            product = Product.objects.get(pk=product_id)
         except Product.DoesNotExist:
             return Response({
                 "message": "Product does not exist."
@@ -95,6 +100,7 @@ class ProductViewApi(generics.GenericAPIView):
             "message": "Product Updated Successfully!",
             "product": self.serializer_class(product).data
         }, status=status.HTTP_200_OK)
+
 
     def delete(self, request):
         product_id = request.data.get('product_id')

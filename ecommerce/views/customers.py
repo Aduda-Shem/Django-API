@@ -67,10 +67,15 @@ class CustomerViewApi(generics.GenericAPIView):
             "customer": self.serializer_class(customer).data
         }, status=status.HTTP_201_CREATED)
 
-    def put(self, request, pk=None):
-        pk = request.data.get('id')
+    def put(self, request):
+        customer_id = request.data.get('customer_id')
+        if not customer_id:
+            return Response({
+                "message": "Please provide the customer ID."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            customer = Customer.objects.get(pk=pk)
+            customer = Customer.objects.get(pk=customer_id)
         except Customer.DoesNotExist:
             return Response({
                 "message": "Customer does not exist."
@@ -90,6 +95,7 @@ class CustomerViewApi(generics.GenericAPIView):
             "message": "Customer Updated Successfully!",
             "customer": self.serializer_class(customer).data
         }, status=status.HTTP_200_OK)
+
 
     def delete(self, request):
         customer_id = request.data.get('customer_id')
