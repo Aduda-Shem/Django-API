@@ -5,29 +5,31 @@ services:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - 5432:5432
-  pgadmin:
 
   app:
     build: 
       context: .
     restart: always
     volumes:
-      - static-data:/vol/web   
+      - /app/backend:/vol/web
+      - static-data:/vol/static 
     environment:
-      - DB_HOST=db
-      - DB_NAME=${POSTGRES_DB}
-      - DB_USER=${POSTGRES_USER}
-      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_ENGINE=django.db.backends.postgresql 
+      - HOST=db
+      - PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-
+      - AFRICASTALKING_USERNAME=${AFRICASTALKING_USERNAME}
+      - AFRICASTALKING_API_KEY=${AFRICASTALKING_API_KEY}
+      - AFRICASTALKING_SENDER_ID=${AFRICASTALKING_SENDER_ID}
+      - AFRICASTALKING_URL=${AFRICASTALKING_URL}
     depends_on:
       - db
 
@@ -38,10 +40,12 @@ services:
     depends_on:
       - app
     ports:
-      -80:8000
+      - "8080:8000"
     volumes:
-      -static-data:/vol/static
+      - ./proxy:/proxy  
+      - /app/backend:/vol/backend
+      - static-data:/vol/static
 
-  volumes:
-    postgres_data:
-    static_data:
+volumes:
+  postgres_data:
+  static-data:

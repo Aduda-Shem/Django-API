@@ -187,3 +187,26 @@ Each resource (customers, products, orders) is managed by a single API endpoint,
 
 ## Postman Collection
 [Download Postman Collection](postman/postman_collection.json)
+
+
+
+# Django API Deployment with Docker Compose on AWS
+This deployment setup includes:
+- A PostgreSQL database container.
+- Django API container.
+- Nginx reverse proxy container for serving static files and forwarding requests to the Django API.
+- Configuration files for Docker Compose, Django, Nginx, and uWSGI.
+
+## Directory Structure
+
+- **/proxy**: Contains configuration files for the Nginx reverse proxy server.
+  - **default.conf.tpl**: Nginx configuration template defining how requests are handled.
+  - **Dockerfile**: Dockerfile for building the Nginx proxy server image.
+  - **run.sh**: Shell script for generating Nginx configuration and starting the server.
+  - **uwsgi_params**: File containing mappings of HTTP headers to uWSGI variables.
+
+## Deployment Steps
+1. SSH into your EC2 instance and clone this repository.
+2. Copy your `.env` file and Docker Compose files to the EC2 instance.
+3. Run `docker-compose -f docker-compose.yml -f docker-compose-deploy.yml up -d` to deploy your Django API.
+4. Access your Django API through the public IP or domain name of your EC2 instance.

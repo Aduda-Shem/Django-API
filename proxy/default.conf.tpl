@@ -1,5 +1,5 @@
 server {
-    listen $(LISTEN_PORT);
+    listen ${LISTEN_PORT};
 
     location /static {
         alias /vol/static;
@@ -7,7 +7,7 @@ server {
 
     location / {
         uwsgi_pass ${APP_HOST}:${APP_PORT};
-        include  /ect/nginx/uwsgi_params;
+        include /etc/nginx/uwsgi_params;
         client_max_body_size 10M;
     }
 }
