@@ -187,7 +187,7 @@ Each resource (customers, products, orders) is managed by a single API endpoint,
    ![Delete Order](READMEscreenshots/orderDelete.png)
 
    After making an order, the user is notifiedn via a message using the africastalking, sample free sandbox :
-   ![alt text](READMEscreenshots/history.png)
+   ![alt text](READMEscreenshots/historys.png)
 
    ![alt text](READMEscreenshots/message.png)
 
