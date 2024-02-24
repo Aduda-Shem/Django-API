@@ -17,6 +17,7 @@ class OrderViewApi(generics.GenericAPIView):
     permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['openid']    
 
+
     def get_queryset(self):
         return Order.objects.all()
 

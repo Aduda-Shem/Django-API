@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "db6a4c1a-662f-4090-adec-1ad3e28b2409",
+		"_postman_id": "5767c742-9f43-4637-896b-e936c66e34c3",
 		"name": "DJANGO-API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26962614",
-		"_collection_link": "https://orange-crescent-383445.postman.co/workspace/My-Workspace~914a4b78-e725-45a4-8cd9-e6e3cee716fa/collection/26962614-db6a4c1a-662f-4090-adec-1ad3e28b2409?action=share&source=collection_link&creator=26962614"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29185076",
+		"_collection_link": "https://muchpaul.postman.co/workspace/New-Team-Workspace~a85f0960-f007-467f-9f3d-cf15b653dcf2/collection/29185076-5767c742-9f43-4637-896b-e936c66e34c3?action=share&source=collection_link&creator=29185076"
 	},
 	"item": [
 		{
@@ -13,25 +13,24 @@
 				{
 					"name": "POST Products",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8000/api/products?Authorization=Bearerr a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products"
-							],
-							"query": [
-								{
-									"key": "Authorization",
-									"value": "Bearerr a2pNUZvKoyHrXN0FqZaubZaE2rQQNC"
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Honda Fit (Honda)\",\n  \"description\": \"Honda car model\",\n  \"price\": 25000,\n  \"quantity\": 5\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
-						}
+							}
+						},
+						"url": "localhost:8000/api/products"
 					},
 					"response": []
 				},
@@ -39,34 +38,62 @@
 					"name": "GET Products",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8000/api/products",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products"
-							]
-						}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"url": "localhost:8000/api/products"
 					},
 					"response": []
 				},
 				{
 					"name": "PUT Products",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"product_id\": 1,\n  \"name\": \"Volkswagen (VW)\",\n  \"description\": \"Volkswagen car model\",\n  \"price\": 25000,\n  \"quantity\": 5\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/products"
 					},
 					"response": []
 				},
 				{
 					"name": "DELETE Product",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"product_id\": 4\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/products"
 					},
 					"response": []
 				}
@@ -79,27 +106,23 @@
 					"name": "POST Orders",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": 1,\n  \"status\": \"Approved\",\n  \"order_items\": [\n    {\n      \"id\": 1,\n      \"quantity\": 1\n    },\n    {\n      \"id\": 7,\n      \"quantity\": 1\n    }\n  ]\n}\n",
+							"raw": "{\n  \"customer\": 1,\n  \"status\": \"Approved\",\n  \"order_items\": [\n    {\n      \"id\": 1,\n      \"quantity\": 1\n    },\n    {\n      \"id\": 2,\n      \"quantity\": 1\n    }\n  ]\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8000/api/order",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"order"
-							]
-						}
+						"url": "localhost:8000/api/order"
 					},
 					"response": []
 				},
@@ -107,7 +130,14 @@
 					"name": "GET Orders",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"url": "localhost:8000/api/order"
 					},
 					"response": []
 				},
@@ -115,15 +145,38 @@
 					"name": "PUT Orders",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"url": "localhost:8000/api/order"
 					},
 					"response": []
 				},
 				{
 					"name": "DELETE Orders",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/order"
 					},
 					"response": []
 				}
@@ -135,8 +188,24 @@
 				{
 					"name": "POST Customer",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"full_name\": \"Immanuel Mesh\",\n  \"code\": \"ADU001\",\n  \"phone_number\": \"254741732778\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/customer"
 					},
 					"response": []
 				},
@@ -144,7 +213,14 @@
 					"name": "GET Customer",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"url": "localhost:8000/api/customer"
 					},
 					"response": []
 				},
@@ -152,35 +228,47 @@
 					"name": "PUT Customer",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"1\",\n    \"full_name\": \"Aduda Shem\",\n    \"code\": \"123456789\",\n    \"phone_number\": \"+254741732778\",\n    \"date_created\": \"2024-02-22T11:49:19.882414Z\"\n}",
+							"raw": "{\n    \"customer_id\": \"1\",\n    \"full_name\": \"Aduda Shem\",\n    \"code\": \"123456789\",\n    \"phone_number\": \"+254741732778\",\n    \"date_created\": \"2024-02-22T11:49:19.882414Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8000/api/customer",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"customer"
-							]
-						}
+						"url": "localhost:8000/api/customer"
 					},
 					"response": []
 				},
 				{
 					"name": "DELETE  Customer",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer a2pNUZvKoyHrXN0FqZaubZaE2rQQNC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/customer"
 					},
 					"response": []
 				}
@@ -191,59 +279,21 @@
 			"request": {
 				"auth": {
 					"type": "oauth2",
-					"oauth2": [
-						{
-							"key": "scope",
-							"value": "profile",
-							"type": "string"
-						},
-						{
-							"key": "accessTokenUrl",
-							"value": "https://accounts.google.com/o/oauth2/token",
-							"type": "string"
-						},
-						{
-							"key": "authUrl",
-							"value": "https://accounts.google.com/o/oauth2/auth",
-							"type": "string"
-						},
-						{
-							"key": "redirect_uri",
-							"value": "http://localhost:8000/accounts/oidc/google/login/callback/",
-							"type": "string"
-						},
-						{
-							"key": "useBrowser",
-							"value": false,
-							"type": "boolean"
-						},
-						{
-							"key": "clientSecret",
-							"value": "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",
-							"type": "string"
-						},
-						{
-							"key": "clientId",
-							"value": "896860218507-sq4vk3ectobjv66gvke6s6ktbv9j9a06.apps.googleusercontent.com",
-							"type": "string"
-						},
-						{
-							"key": "grant_type",
-							"value": "authorization_code_with_pkce",
-							"type": "string"
-						},
-						{
-							"key": "addTokenTo",
-							"value": "header",
-							"type": "string"
-						}
-					]
+					"oauth2": {
+						"scope": "profile",
+						"accessTokenUrl": "https://accounts.google.com/o/oauth2/token",
+						"authUrl": "https://accounts.google.com/o/oauth2/auth",
+						"redirect_uri": "http://localhost:8000/accounts/oidc/google/login/callback/",
+						"useBrowser": false,
+						"clientSecret": "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",
+						"clientId": "896860218507-sq4vk3ectobjv66gvke6s6ktbv9j9a06.apps.googleusercontent.com",
+						"grant_type": "authorization_code_with_pkce",
+						"addTokenTo": "header"
+					}
 				},
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": ""
-				}
+				"url": ""
 			},
 			"response": []
 		},
@@ -296,22 +346,7 @@
 						}
 					]
 				},
-				"url": {
-					"raw": "http://127.0.0.1:8000/o/token/",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "8000",
-					"path": [
-						"o",
-						"token",
-						""
-					]
-				}
+				"url": "http://127.0.0.1:8000/o/token/"
 			},
 			"response": []
 		}
